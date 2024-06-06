@@ -34,6 +34,7 @@ class LecturaDataTable extends DataTable
     public function query(Lectura $model): QueryBuilder
     {
         return $model->newQuery()
+        ->latest()
         ->with('dispositivo');
     }
 
