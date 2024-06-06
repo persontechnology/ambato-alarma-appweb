@@ -11,7 +11,7 @@ class SensorDataController extends Controller
 {
     public function index(Request $request) {
 
-        $dispositivo=Dispositivo::find($request->dispositivo_id);
+        $dispositivo=Dispositivo::where('codigo',$request->dispositivo_id)->first();
         if($dispositivo){
             $lectura=Lectura::create($request->all());
             return $lectura;
