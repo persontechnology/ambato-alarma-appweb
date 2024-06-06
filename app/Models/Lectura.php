@@ -19,7 +19,7 @@ class Lectura extends Model
     ];
 
     protected $casts = [
-        'created_at' => 'datetime:Y-m-d H:00',
+        'created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function dispositivo(): BelongsTo
