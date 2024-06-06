@@ -10,11 +10,16 @@ class Lectura extends Model
 {
     use HasFactory;
 
+    
     protected $fillable=[
         'valor',
         'bateria',
         'visto',
         'dispositivo_id'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:00',
     ];
 
     public function dispositivo(): BelongsTo

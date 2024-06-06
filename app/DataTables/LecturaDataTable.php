@@ -65,6 +65,7 @@ class LecturaDataTable extends DataTable
             Column::make('bateria')->title('Batería'),
             Column::make('visto'),
             Column::make('dispositivo.nombre')->title('Dispositivo'),
+            Column::make('created_at')->title('Fecha'),
             
         ];
     }
