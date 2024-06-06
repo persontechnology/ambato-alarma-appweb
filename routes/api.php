@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ResponderCarta;
-use App\Http\Controllers\SensorDataController;
+use App\Http\Controllers\Api\SensorDataController;
 use App\Models\Carta;
 use App\Models\Ninio;
 use Carbon\Carbon;
@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 
-Route::get('/sensor-data',[SensorDataController::class,'sensorData']);
-Route::post('/sensor-data',[SensorDataController::class,'sensorData']);
+// Route::get('/sensor-data',[SensorDataController::class,'index']);
+Route::post('/sensor-data',[SensorDataController::class,'index']);
 
 
 

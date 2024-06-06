@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Dispositivo;
 use App\Models\Lectura;
 use Illuminate\Http\Request;
 
 class SensorDataController extends Controller
 {
-    public function sensorData(Request $request) {
+    public function index(Request $request) {
 
         $dispositivo=Dispositivo::find($request->dispositivo_id);
         if($dispositivo){
