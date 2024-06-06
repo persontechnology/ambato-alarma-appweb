@@ -25,6 +25,9 @@ class LecturaDataTable extends DataTable
             ->addColumn('action', function($lectura){
                 return view('lecturas.action',['lectura'=>$lectura])->render();
             })
+            ->editColumn('created_at',function($lectura){
+                return $lectura->created_at;
+            })
             ->setRowId('id');
     }
 
