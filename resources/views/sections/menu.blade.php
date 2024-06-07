@@ -1,5 +1,5 @@
 
-<div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg {{ Route::is('home')?'sidebar-main-resized':'' }}">
 
     <!-- Sidebar content -->
     <div class="sidebar-content">

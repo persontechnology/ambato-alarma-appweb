@@ -48,6 +48,8 @@ Auth::routes(['register' => false]);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::post('validarec', [HomeController::class, 'validarec'])->name('validarec');
+    Route::get('/buscar-dispositivos', [HomeController::class, 'buscarDispositivos'])->name('dispositivos.buscar');
+
 
     // usuarios
     Route::resource('usuarios', UserController::class);

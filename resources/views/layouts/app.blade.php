@@ -54,9 +54,6 @@
 	<script src="{{ asset('assets/js/vendor/jquery-confirm/jquery-confirm.min.js') }}"></script>
 	
 
-	
-
-
 
 	{{-- plugins extras --}}
 	@stack('scriptsHeader')
@@ -64,7 +61,7 @@
 	<script src="{{ asset('assets/js/app.js') }}"></script>
 	
 	<!-- /theme JS files -->
-	{{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+	@vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 	
 
@@ -160,9 +157,12 @@
 		@include('sections.menu')
 		@endauth
 			
-		
 		<!-- /main sidebar -->
 
+
+		<!-- Secondary sidebar -->
+		@yield('secondary-sidebar')
+		<!-- /secondary sidebar -->
 
 		<!-- Main content -->
 		<div class="content-wrapper">
@@ -388,38 +388,72 @@
 		
 
 		//mapa
+		var map_modal;
+
 		function verUbicacion(element) {
-            var latitud = $(element).data('latitud');
-            var longitud = $(element).data('longitud');
+			var latitud = $(element).data('latitud');
+			var longitud = $(element).data('longitud');
+			var nombre = $(element).data('nombre');
 
-            // Mostrar el modal
-            $('#modal_scrollable_mapa').modal('show');
+			// Mostrar el modal
+			$('#modal_scrollable_mapa').modal('show');
 
-            // Inicializar el mapa cuando el modal esté completamente visible
-            $('#modal_scrollable_mapa').on('shown.bs.modal', function () {
-                var map = L.map('modal_scrollable_mapa_content').setView([latitud, longitud], 13);
+			// Inicializar el mapa cuando el modal esté completamente visible
+			$('#modal_scrollable_mapa').on('shown.bs.modal', function () {
+				// Verificar si el mapa ya está inicializado y destruirlo si es necesario
+				if (map_modal) {
+					map_modal.remove();
+					map_modal = null; // Asegurarse de que la referencia a map_modal se limpie
+				}
 
-                // Añadir una capa de mapa (puedes elegir otras capas disponibles en Leaflet)
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(map);
+				// Inicializar el mapa
+				map_modal = L.map('modal_scrollable_mapa_content').setView([latitud, longitud], 13);
 
-                // Añadir un marcador en la ubicación
-                L.marker([latitud, longitud]).addTo(map)
-                    .bindPopup('Ubicación del comercio')
-                    .openPopup();
-            });
+				// Añadir una capa de mapa (puedes elegir otras capas disponibles en Leaflet)
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '&copy; OpenStreetMap contributors'
+				}).addTo(map_modal);
 
-            // Limpiar el mapa cuando se cierre el modal
-            $('#modal_scrollable_mapa').on('hidden.bs.modal', function () {
-                $('#modal_scrollable_mapa_content').html('');
-            });
-        }
+				// Añadir un marcador en la ubicación
+				L.marker([latitud, longitud]).addTo(map_modal)
+					.bindPopup(nombre)
+					.openPopup();
+			});
+		}
+
+		// Limpiar el mapa cuando se cierre el modal
+		$('#modal_scrollable_mapa').on('hidden.bs.modal', function () {
+			if (map_modal) {
+				map_modal.remove(); // Esto eliminará el mapa de Leaflet del contenedor
+				map_modal = null; // Asegurarse de que la referencia a map_modal se limpie
+			}
+			$('#modal_scrollable_mapa_content').html(''); // Limpiar el contenedor del mapa
+		});
+
+
+
 		
 
 
     </script>
 	
 	@stack('scripts')
+
+	<script>
+		 $(document).ready(function() {
+
+			// escuchar notificacion en tiempo real 
+			Echo.channel('lectura-nueva')
+			.listen('NuevaLecturaEvent', (data) => {
+				
+				if ($('#contador-notificacion-dispositivo-id-' + data.data.dispositivo.id).length) {
+					$('#contador-notificacion-dispositivo-id-' + data.data.dispositivo.id).html(data.data.dispositivo.contador_notificaciones);
+					centrarEnMarcador(data.data.comercio.id);
+				}
+				
+			});
+
+		});
+	</script>
 </body>
 </html>

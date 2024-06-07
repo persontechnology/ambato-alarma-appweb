@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('valor');
             $table->decimal('bateria');
+            $table->integer('contador_notificaciones')->default(0);
             $table->enum('estado',['ACTIVO','INACTIVO'])->nullable();
             $table->foreignId('comercio_id')->nullable()->constrained();
 

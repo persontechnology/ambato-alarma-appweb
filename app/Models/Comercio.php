@@ -30,6 +30,27 @@ class Comercio extends Model
 
     public function getUserNombreAttribute()
     {
-        return $this->user ? $this->user->nombre : '';
+        return $this->user ? $this->user->name : $this->user->email;
+    }
+
+
+    // obtener datos formateados de comercio
+    public static function obtenerDatosFormateados($comercios)
+    {
+        return $comercios->map(function ($comercio) {
+            return [
+                'id' => $comercio->id,
+                'nombre' => $comercio->nombre,
+                'descripcion' => $comercio->descripcion,
+                'direccion' => $comercio->direccion,
+                'latitud' => $comercio->latitud,
+                'longitud'=>$comercio->longitud,
+                'numero_celular' => $comercio->numero_celular,
+                'alarma_comunitaria_id' => $comercio->alarma_comunitaria_id,
+                'foto' => route('comercios.verFoto', $comercio->id),
+                'estado' => $comercio->estado,
+                'user_nombre' => $comercio->user_nombre
+            ];
+        });
     }
 }

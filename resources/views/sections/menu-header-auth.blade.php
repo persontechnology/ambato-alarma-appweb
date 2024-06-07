@@ -2,6 +2,13 @@
     <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
         <i class="ph-list"></i>
     </button>
+
+    @hasSection('secondary-sidebar')
+    <button type="button" class="navbar-toggler sidebar-mobile-secondary-toggle rounded">
+        <i class="ph-arrow-left"></i>
+    </button>
+    @endif
+
 </div>
 
 
