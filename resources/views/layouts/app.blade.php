@@ -161,7 +161,10 @@
 
 
 		<!-- Secondary sidebar -->
-		@yield('secondary-sidebar')
+		@auth
+		@yield('secondary-sidebar')	
+		@endauth
+		
 		<!-- /secondary sidebar -->
 
 		<!-- Main content -->
